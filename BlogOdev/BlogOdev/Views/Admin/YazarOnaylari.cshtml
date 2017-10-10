@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Yazar Onayları";
+}
+
+@model IEnumerable<BlogOdev.Models.data.Kullanici>
+
+
+
+<table border="1" style="width:450px; height:50px;">
+    <thead>
+        <tr>
+            <th  style="text-align:center;">Yazar Olmak İsteyenler</th>
+            <th  style="text-align:center;">Karar</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var kullanici in Model)
+        {
+            <tr>
+                <td  style="text-align:center;">@kullanici.Adi @kullanici.Soyadi  &nbsp;  &nbsp; </td>
+                <td>
+                    @*<a href="/Admin/OnayVer/@kullanici.KullaniciId">Onay Ver</a>*@
+                <a href="/Admin/OnayVer/@kullanici.KullaniciId"> <input type="submit" name="onayla" value="Yazarı Onayla" /></a>
+
+            </td>
+        </tr>
+
+        }
+
+    </tbody>
+
+</table>

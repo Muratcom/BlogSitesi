@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = Model.Baslik;
+}
+
+
+@*liste halinde gelmeyecek iligili makaleyi çekecez o yüzden sadece model çağırıyoz*@
+@model BlogOdev.Models.data.Makale
+
+
+<div class="blog-posts classic-blog single">
+    <div class="post format-image">
+        <div class="meta"><span class="date">@Model.MakaleEklenmeTarihi</span><span class="categories">
+            @*makale altında foreignkey olarak kategorinin primary keyini kullandığım için kategoriye ait istediğim veriye de ulaşabilirim.(aşağıdaki gibi)*@
+            <a href="/Kategori/Index/@Model.KategoriID">@Model.Kategori.KategoriAdi</a>, 
+            </span>
+        @*makale nin primary keyi yorumun foreign keyi olduğundan makaleye bağlı yorum sayısını aşağıdaki gibi çekeek kullanabilirim*@
+        @*yorum sayısına tıklanınca direktaşağıdaki yorumlara inmesi için aşağıdaki yorum alanına bir a id atayıp buradan yönlendirme yapıyoruz.*@
+        <span class="comments"><a href="#yorum">@Model.Yorums.Count<i class="icon-chat-1"></i></a></span></div>
+        <h1 class="post-title">@Model.Baslik</h1>
+        <figure class="main">
+            <img src="@Model.Resim.BuyukBoyut" alt="" />
+        </figure>
+        <div class="post-content">
+          <p>@Model.Detay</p>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="/Makale/Duzenle/@Model.MakaleId"> <input type="submit" name="submit" value="Duzenle" /></a>
+                <br/>
+                <br />
+                <a href="/Makale/Sil/@Model.MakaleId"> <input type="submit" name="submit" value="Sil" /></a>
+            }
+
+           
+
+            <div class="meta tags">
+            @foreach (BlogOdev.Models.data.Etiket etiket in Model.Etikets)
+            {
+                <a href="/Etiket/Index/@etiket.EtiketId">@etiket.EtiketAdi</a>
+
+            }
+
+            </div>
+            <div class="click-share">
+                <ul>
+                    <li><a class="btn share-facebook" href="/Content/#">Beğen</a></li>
+                    <li><a class="btn share-twitter" href="/Content/#">Tweet</a></li>
+                    <li><a class="btn share-pinterest" href="/Content/#">Pin it</a></li>
+                </ul>
+            </div>
+            <!-- /.share-links -->
+
+        </div>
+    </div>
+    <!-- /.post -->
+
+</div>
+<!-- /.blog-posts -->
+
+<div class="about-author dark-wrapper">
+    <div class="author-image"> <img alt="" src="@Model.Kullanici.Resim.OrtaBoyut" /> </div>
+    <div class="author-details">
+        <h3>@Model.Kullanici.Adi @Model.Kullanici.Soyadi Hakkında</h3>
+        <p>@Model.Kullanici.Aciklama</p>
+        <ul class="social">
+            <li><a href="/Content/#"><i class="icon-s-twitter"></i></a></li>
+            <li><a href="/Content/#"><i class="icon-s-facebook"></i></a></li>
+            <li><a href="/Content/#"><i class="icon-s-pinterest"></i></a></li>
+            <li><a href="/Content/#"><i class="icon-s-dribbble"></i></a></li>
+            <li><a href="/Content/#"><i class="icon-s-linkedin"></i></a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="divide100"></div>
+
+
+<a href="#" id="yorum"> </a>
+<div id="comments">
+    <h3>@Model.Yorums.Count Yorum</h3>
+    <ol id="singlecomments" class="commentlist">
+        @foreach (BlogOdev.Models.data.Yorum yorumcu in Model.Yorums)
+        {
+            <li>
+                <div class="comment-wrapper">
+                    <div class="user"><img alt="" src="~/Content/userimage/defaultuserman.jpg" class="avatar" /></div>
+                    <div class="message">
+                        <div class="arrow-box">
+                            <div class="info">
+                                <h2><a href="/Content/#">@yorumcu.YorumcuAdSoyad</a></h2>
+                                <div class="meta"> <span class="date">@yorumcu.YorumEklenmeTarihi.Value.ToShortDateString()</span> </div>
+                            </div>
+                            @*tablonun adı ile property adını aynı girdiğim için system otomatikmen propertynin adına 1 sayısını eklemiş*@
+                            <p>@yorumcu.Yorum1</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+        
+       
+    </ol>
+</div>
+<!-- /#comments -->
+<div class="divide100"></div>
+<div class="comment-form-wrapper">
+    <h3>Dusuncelerinizi paylasmak ister misiniz?</h3>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <p style="color:red">Yorum yapabilmek icin kullanici girisi yapmaniz gerektigini unutmayiniz!!!</p>
+    }
+    
+    <p>Email adresiniz yayinlanmayacaktir. Lutfen (*) isaretli alanlari doldurunuz </p>
+    <form class="comment-form" name="form_name" action="/Makale/Detay/@Model.MakaleId" method="post">
+        <div class="name-field">
+            <label><i class="icon-user"></i></label>
+            <input type="text" name="YorumcuAdSoyad" placeholder="Ad Soyad (*)" required="" />
+        </div>
+        <div class="email-field">
+            <label><i class="icon-mail-alt"></i></label>
+            <input type="text" name="YorumcuMail" placeholder="Mail adresiniz (*)"  required=""/>
+        </div>
+        <div class="website-field">
+            <label><i class="icon-globe"></i></label>
+            <input type="text" name="YorumcuWebAdresi" placeholder="Websiteniz" />
+        </div>
+        <div class="message-field">
+            <textarea name="Yorum" id="textarea" rows="5" cols="30" placeholder="Yorumlarınızı bu alanda belirtebilirsiniz... (*)" required=""></textarea>
+        </div>
+        <input type="submit" value="Gönder" name="submit" class="btn btn-submit" />
+    </form>
+</div>
+

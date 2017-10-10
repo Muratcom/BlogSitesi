@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Kategoriler Listesi";
+}
+
+@using BlogOdev.Models.data
+@model List<Kategori>
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Liste</title>
+</head>
+<body>
+    <div>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Kategori Adı</th>
+                    <th  style="text-align:center">Kategori Açıklaması</th>
+                    <th  style="text-align:center">Kategoriye Ait Makale Sayısı</th>
+                    <th style="width:50px; text-align:center;">Durum</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center">@item.KategoriAdi</td>
+                        <td style="text-align:center">@item.Aciklama</td>
+                        <td style="text-align:center">@item.Makales.Count</td>
+                        <td style="text-align:center">
+                            <a href="/Kategori/Duzenle/@item.KategoriId">  <input type="submit" name="name" value="Duzenle" style="background-color:forestgreen; color:white"/></a> 
+
+                            <a href="/Kategori/Sil/@item.KategoriId">  <input type="submit" name="name" value="Sil" style="background-color:red; color:white;" /></a> 
+
+                        </td>
+                    </tr>
+                }
+               
+            </tbody>
+            
+        </table>
+        <br/>
+        <a href="/Kategori/KategoriEkle" ><input type="submit" name="Ekle" value="Kategori Ekle" style="width:603px;"/></a>  
+
+
+    </div>
+</body>
+</html>
+
+

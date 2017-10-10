@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Giris Yap";
+}
+
+<form action="/Kullanici/Login" method="post" style="padding:20px 20px 20px; text-align:center;">
+    <table>
+        <tr>
+            <td>Kullanıcı Adı:</td>
+            <td>
+                <input type="text" name="KullaniciAdi" value="" placeholder="Lütfen kullanıcı adını giriniz" />
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>Şifre:</td>
+            <td>
+                <input type="password" name="Parola" value="" placeholder="Lütfen şifreyi giriniz" />
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="submit" value="Giriş Yap" style="margin-top:10px;" />
+            </td>
+        </tr>
+    </table>
+
+
+</form>
+

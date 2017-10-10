@@ -1,0 +1,82 @@
+﻿<div class="navbar default">
+    <div class="navbar-header">
+        <div class="container">
+            <div class="basic-wrapper">
+                <a class="btn responsive-menu pull-right" data-toggle="collapse" data-target=".navbar-collapse"><i></i></a>
+                <div class="navbar-brand"><a href="/Content/index.html"><img src="/Content/style/images/logo.png" alt="" data-src="/Content/style/images/logo.png" data-ret="style/images/logo@2x.png" class="retina" /></a></div>
+            </div>
+            <nav class="collapse navbar-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Home/Index">Anasayfa</a></li>
+                    @if (User.IsInRole("Yazar"))
+                    {
+                        <li class="current dropdown">
+                            <a href="/Yazar/Index" class="dropdown-toggle js-activated">Yazar Paneli</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Makale/MakaleEkle">Makale Ekle</a></li>
+                                <li><a href="/Yazar/Takipcileri">Takipçilerim</a></li>
+                                <li><a href="/Yazar/Makalelerim">Makalelerim</a></li>
+
+                            </ul>
+                        </li>
+                    }
+                 @if (User.IsInRole("Admin"))
+                 {
+                    <li class="dropdown">
+                        <a href="/Admin/Index" class="dropdown-toggle js-activated">Admin Paneli</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Makale/MakaleEkle">Makale Ekle</a></li>                      
+                            <li><a href="/Kategori/Liste">Kategori Paneli</a></li>                         
+                            <li><a href="/Etiket/EtiketEkle">Etiket Ekle</a></li>  
+                            <li><a href="/Admin/KullaniciEkle">Kullanici Ekle</a></li>
+                            <li><a href="/Admin/YazarOnaylari">Yazar Onaylari</a></li>
+                        </ul>
+                    </li>
+                 }
+                   @if (!User.IsInRole("Yazar"))
+                   {
+                    <li class="">
+                        <a href="/Yazar/YazarOl">Yazar Ol</a>
+
+                    </li>
+                   }
+
+                   
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li class="">
+                            <a href="/Kullanici/UyeOl" >Üye Ol</a>
+
+                        </li>
+                    }
+                    
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="~/Kullanici/CikisYap?redirectUrl=@this.Request.RawUrl">Cikis Yap</a></li>
+                        @*@this.Request.RawUrl= bu işemi yaptğımda kullanıcı çıkış yaptığında çıkış yapmadanönce hangi sayfad ise yine o sayfada kalıyo*@
+                    }
+                    else
+                    {
+                        <li><a href="~/Kullanici/Login">Giris Yap</a></li>
+                    }
+
+
+
+                    <li class="dropdown social-dropdown pull-right">
+                        <div class="share btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="icon-heart-1"></i></div>
+                        <ul class="button-group dropdown-menu dropdown-menu-right share-links">
+                            <li><a href="/Content/#" class="btn"><i class="icon-s-facebook"></i></a></li>
+                            <li><a href="/Content/#" class="btn"><i class="icon-s-twitter"></i></a></li>
+                            <li><a href="/Content/#" class="btn"><i class="icon-s-pinterest"></i></a></li>
+                        </ul>
+                    </li>
+                    <!--/social-dropdown -->
+                </ul>
+                <!--/.navbar-nav -->
+            </nav>
+            <!--/.nav-collapse -->
+        </div>
+        <!--/.container -->
+    </div>
+    <!--/.navbar-header -->
+</div>

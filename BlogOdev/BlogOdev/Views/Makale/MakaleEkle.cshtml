@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Makale Ekle";
+}
+
+<form action="/Makale/MakaleEkle" method="post" enctype="multipart/form-data">
+
+    <table>
+        <tr>
+            <td>Başlık:</td>
+            <td><input type="text" name="Baslik" value="" /></td>
+        </tr>
+
+
+        <tr>
+            <td>Detay:</td>
+            @*<td><input type="text" name="Detay" value="" /></td>*@
+            <td><textarea name="Detay"></textarea></td>
+        </tr>
+
+        <tr>
+            <td>Kategori:</td>
+            <td><select name="KategoriID">
+                @foreach (BlogOdev.Models.data.Kategori kat in ViewBag.Kategoriler)
+                {
+                    <option value="@kat.KategoriId">@kat.KategoriAdi</option>
+
+                }
+    
+</select></td>
+        </tr>
+
+        <tr>
+            <td>Resim:</td>
+            <td><input type="file" name="resim" value="" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="submit" value="Ekle" />
+            </td>
+        </tr>
+
+    </table>
+
+
+</form>
+
+

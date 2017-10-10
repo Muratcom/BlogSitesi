@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Makale Düzenleme Sayfası";
+}
+
+@using BlogOdev.Models.data
+@model Makale
+
+<form action="/Makale/Duzenle" method="post" enctype="multipart/form-data">
+
+    <table>
+        <tr>
+            <td><input type="hidden" name="MakaleId" value="@Model.MakaleId" /></td>
+            <td>Başlık:</td>
+            <td><input type="text" name="Baslik" value="@Model.Baslik" /></td>
+        </tr>
+
+
+        <tr>
+            <td>Detay:</td>
+           
+            <td><textarea name="Detay">@Model.Detay</textarea></td>
+        </tr>
+
+
+        <tr>
+            <td>Kategori:</td>
+            <td>
+                <select name="KategoriID">
+                 
+                    <option value="@Model.KategoriID">@Model.Kategori.KategoriAdi</option>
+
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="submit" value="Duzenle" />
+            </td>
+        </tr>
+
+    </table>
+
+
+</form>
+
+

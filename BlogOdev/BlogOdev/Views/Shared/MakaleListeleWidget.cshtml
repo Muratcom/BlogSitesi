@@ -1,0 +1,96 @@
+﻿@{ 
+    Layout = null;
+}
+<script src="~/Content/style/js/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function myfunction() {
+
+        $("a.begen").click(function () {
+            var id = $(this).data("id");
+            var link = "/Makale/Begen/" + id;
+            $.ajax({
+                type: "GET",
+                url: link,
+                success: function (sonuc) {
+                    $("a.begen").html(sonuc); 
+                }
+
+            });
+        });
+
+        $("a.goruntu").click(function () {
+            var id = $(this).data("id");
+            var link = "/Makale/Goruntule/" + id;
+            $.ajax({
+                type: "GET",
+                url: link,
+                success: function (sonuc) {
+                    $("a.goruntu").html(sonuc);
+                }
+
+            });
+        });
+    });
+
+</script>
+
+
+@model IEnumerable<BlogOdev.Models.data.Makale>
+
+@helper MetinKisalt(string metin)
+{
+if (metin.Length > 300)
+{
+        @metin.Substring(0, 300)
+}
+else
+{
+        @metin
+}
+}
+
+<div class="blog-posts col-blog">
+    @foreach (var item in Model)
+    {
+        <div class="post row">
+            <div class="col-sm-4">
+                <figure>
+                    <a href="/Makale/Detay/@item.MakaleId" class="goruntu" data-id="@item.MakaleId">
+                        <div class="text-overlay">
+                          <div class="info"><span>Devamını Oku...</span></div>
+                        </div>
+                        <img src="@item.Resim.OrtaBoyut" alt="" />
+                    </a>
+                </figure>
+            </div>
+            <div class="col-sm-8 post-content">
+                <div class="meta"><span class="date">@item.MakaleEklenmeTarihi.ToShortDateString()</span><span class="comments"><a href="#">@item.Yorums.Count <i class="icon-chat-1"></i></a></span>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span>
+                        <a href="javascript:void(0)" class="begen" data-id="@item.MakaleId">
+                            @item.BegeniSayisi
+                        <img src="~/Content/image/like.png" alt="Alternate Text" />
+                    </a>
+                </span>
+                }
+               
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span>
+                        <a href="javascript:void(0)" class="goruntu" data-id="@item.MakaleId"> @item.GoruntulenmeSayisi
+                            <img src="~/Content/image/view.png" alt="Alternate Text" />
+                        </a>
+                    </span>
+                }
+            
+                </div>
+                <h2 class="post-title"><a href="/Makale/Detay/@item.MakaleId">@item.Baslik</a></h2>
+                <p>@MetinKisalt(item.Detay)</p>
+            </div>
+        </div>
+    }
+  
+    </div>

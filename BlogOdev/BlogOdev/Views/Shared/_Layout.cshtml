@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/Content/style/images/favicon.png">
+    <title>Blog Ödevi - @ViewBag.title</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/Content/style/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/style/css/plugins.css" rel="stylesheet">
+    <link href="/Content/style.css" rel="stylesheet">
+    <link href="/Content/style/css/color/red.css" rel="stylesheet">
+    <link href="/Content/style/type/bebas.css" rel="stylesheet">
+    <link href="/Content/style/type/fontello.css" rel="stylesheet">
+    @RenderSection("head", false)
+</head>
+<body>
+    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+    <div class="body-wrapper">
+        @Html.Partial("~/Views/Partial/_navbar.cshtml")
+        <!--/.navbar -->
+        <div class="offset"></div>
+        <div class="dark-wrapper page-title">
+            <div class="container inner">
+                <h1> @ViewBag.Title </h1>
+            </div>
+            <!--/.container -->
+        </div>
+       
+        <!--/.page-title -->
+
+        <div class="container inner">
+            <div class="row">              
+                <div class="col-sm-8 content">
+                @RenderBody()
+
+                    
+                    </div>
+             
+                <aside class="col-sm-4 sidebar lp30">
+                    @*@RenderSection("populer",false)*@
+                    @{ Html.RenderAction("SonEklenenlerWidget", "Home");
+                            }
+                    <!-- /.widget -->
+                   
+                    @*@RenderSection("sitehakkinda", false)*@
+                    @{ Html.RenderPartial("_sitehakkinda"); }
+                    <!-- /.widget -->
+                 
+                    @{ Html.RenderPartial("Arama"); }
+                    
+                 
+                    @*@RenderSection("kategoriler", false)*@
+                    @{ Html.RenderAction("KategoriWidget", "Kategori");
+                    }
+                   
+                   
+                    @*@RenderSection("etiketler", false)*@
+                    @{ Html.RenderAction("EtiketWidget", "Etiket");
+                    }
+                  
+                </aside>
+               
+
+            </div>
+     
+        </div>
+       
+        @Html.Partial("~/Views/Partial/_footer.cshtml")
+       
+    </div>
+   
+    <script src="/Content/style/js/jquery.min.js"></script>
+        <script src="/Content/style/js/bootstrap.min.js"></script>
+        <script src="/Content/style/js/plugins.js"></script>
+        <script src="/Content/style/js/scripts.js"></script>
+    @RenderSection("scripts",false)
+    
+</body>
+</html>
